@@ -29,13 +29,15 @@ env:
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: false
-  UPLOAD_RELEASE: false
-  TZ: Asia/Shanghai
+  UPLOAD_WETRANSFER: true
+  UPLOAD_RELEASE: true
+  TZ: Asia/Singapore
 
 jobs:
   build:
     runs-on: ubuntu-20.04
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout
@@ -179,6 +181,8 @@ jobs:
       with:
         retain_days: 1
         keep_minimum_runs: 3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.1.0
